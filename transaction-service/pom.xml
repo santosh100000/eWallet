@@ -11,6 +11,14 @@
 
     <artifactId>transaction-service</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>common-code</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+
+        </dependency>
+    </dependencies>
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
