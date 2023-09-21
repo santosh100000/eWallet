@@ -25,6 +25,13 @@ public class Wallet {
 
     private Double balance;
 
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @CreationTimestamp
     private Date createdAt;
 

@@ -36,4 +36,20 @@ public class KafkaNotifyConsumerConfig {
         javaMailSender.send(simpleMailMessage);
 
     }
+    @KafkaListener(topics ="UPDATE-WALLET", groupId = "emails")
+    public void consumeFromWalletUpdatedTopic(ConsumerRecord payload) throws JsonProcessingException {
+        WalletUpdatedPayload walletUpdatedPayload = objectMapper.readValue(payload.value().toString(), WalletUpdatedPayload.class);
+        MDC.put("requestId",  walletUpdatedPayload.getRequestId());
+        LOGGER.info("Getting payload from kafka: {} ", payload);
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("santoshkharel9684@gmail.com");
+        simpleMailMessage.setSubject("Wallet updated for "+walletUpdatedPayload.getUserName() + "!");
+        simpleMailMessage.setTo(walletUpdatedPayload.getUserEmail());
+        simpleMailMessage.setText("Hi "+walletUpdatedPayload.getUserName()+"Your wallet is updated after recent transaction"+ "your new $ balance is "+walletUpdatedPayload.getBalance());
+        simpleMailMessage.setCc("santoshkharel13@gmail.com");
+        javaMailSender.send(simpleMailMessage);
+        MDC.clear();
+
+    }
 }

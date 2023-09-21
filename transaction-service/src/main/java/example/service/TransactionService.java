@@ -40,6 +40,7 @@ public class TransactionService {
                 .txnId(UUID.randomUUID().toString()). build();
         transactionRepository.save(transaction);
         TransactionInitPayload tip = TransactionInitPayload.builder()
+                .id(transaction.getId())
                 .fromUserId(transactionRequest.getFromUserId())
                 .toUserId(transactionRequest.getToUserId())
                 .amount(transactionRequest.getAmount())
